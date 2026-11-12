@@ -1,0 +1,27 @@
+[project]
+name = "local-agent-workspace"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Victor Fernández", email = "victor.fernandez1006@gmail.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "openai>=3.49.0",
+    "pydantic>=2.14.3",
+    "pydantic-settings>=2.16.2",
+]
+
+[project.scripts]
+local-agent-workspace = "local_agent_workspace:main"
+
+[build-system]
+requires = ["uv_build>=0.12.17,<0.13.0"]
+build-backend = "uv_build"
+
+[dependency-groups]
+dev = [
+    "pytest>=9.2.0",
+    "ruff>=0.17.4",
+]
