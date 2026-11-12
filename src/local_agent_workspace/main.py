@@ -1,21 +1,28 @@
+
 from local_agent_workspace.core.llm.llm_client import LLMClient
+from local_agent_workspace.agents.research_agent import ResearchAgent
 
 def main():
     llm_client = LLMClient()
 
-    response = llm_client.generate(
-        system_prompt=(
-            "Eres un arquitecto de software "
-            "especializado en sistemas bancarios"
-        ),
-        prompt=(
-            "Explica cómo funciona un sistema "
-            "de transferencias bancarias basado "
-            "en microservicios"
-        )
+    research_agent = ResearchAgent(
+        llm_client=llm_client
     )
 
-    print("\n=== LLM RESPONSE ===\n")
+    print(f"\nAgent: {research_agent.name}")
+
+    response = research_agent.run(
+        """
+        Investiga cómo funciona un transferencia
+        interbancaria en una arquitectura basada 
+        en microservicios.
+
+        Explica los componentes involucrados,
+        sus responsabilidades y los principales
+        riesgos técnicos.
+        """
+    )
+    print("\n=== RESEARCH AGENT RESPONSE ===\n")
     print(response)
 
 if __name__ == "__main__":
