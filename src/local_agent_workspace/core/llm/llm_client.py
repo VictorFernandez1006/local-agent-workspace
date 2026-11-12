@@ -34,11 +34,7 @@ class LLMClient:
             "content": prompt
         })              
 
-        response = self._client.chat.completions.create(
-            model=self.model,
-            messages=messages,
-            temperature=settings.llm_temperature
-        )
+        response = self.chat_completion(messages)
 
         content = response.choices[0].message.content
 
@@ -46,3 +42,21 @@ class LLMClient:
             raise RuntimeError("The LLM returned an empty response")
 
         return content
+
+    def chat_completion(
+        self,
+        messages: list[dict],
+        tools: list[dict] | None = None
+    ):
+    
+        request = {
+            "model": self.model,
+            "messages": messages,
+            "temperature": settings.llm_temperature
+        }
+
+        if tools:
+            request["tools"] = tools
+            request["tool_choice"] = "auto"
+
+        return self._client.chat.completions.create(**request)
